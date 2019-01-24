@@ -5,9 +5,18 @@ Pod::Spec.new do |s|
   s.license      = { :type => "MIT", :file => "LICENSE" }
   s.summary      = "私人pod代码" # 项目简介
 
+
   s.homepage     = "https://github.com/qiubaiying/EpToolsLib.git" # 仓库的主页
   s.source       = { :git => "https://github.com/qiubaiying/EpToolsLib.git", :tag => "#{s.version}" }#你的仓库地址，不能用SSH地址
-  s.source_files = "*.{h,m}" # 你代码的位置， BYPhoneNumTF/*.{h,m} 表示 BYPhoneNumTF 文件夹下所有的.h和.m文件
+  # s.source = { :git => "https://github.com/xiaofei86/LPPushService.git", :commit => "68defea" } #commit => "68defea" 表示将这个Pod版本与Git仓库中某个commit绑定
+  # s.source = { :git => "https://github.com/xiaofei86/LPPushService.git", :tag => 1.0.0 }        #tag => 1.0.0 表示将这个Pod版本与Git仓库中某个版本的comit绑定
+  # s.source = { :git => "https://github.com/xiaofei86/LPPushService.git", :tag => s.version }    #tag => s.version 表示将这个Pod版本与Git仓库中相同版本的comit绑定
+
+  s.source_files = "EpToolsLib/*.{h,m}", "EpToolsLib/**/*.{h,m}"
+  # “*” 表示匹配所有文件
+  # “*.{h,m}” 表示匹配所有以.h和.m结尾的文件
+  # “**” 表示匹配所有子目录
+  
   s.requires_arc = true # 是否启用ARC
   s.platform     = :ios, "9.0" #平台及支持的最低版本
   s.frameworks   = "UIKit", "Foundation" #支持的框架
