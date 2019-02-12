@@ -75,6 +75,7 @@
 #define kMaxLoadMore    10
 
 
+/// 分割线颜色
 #define EP_SEPARATION_LINE_COLOR [UIColor colorWithHexString:@"E7E7E7"]
 
 // 透明

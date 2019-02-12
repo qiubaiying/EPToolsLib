@@ -10,7 +10,6 @@
 #import "CategoryUtil.h"
 #import <objc/runtime.h>
 
-#define EP_SEPARATION_LINE_COLOR UIColor.lightGrayColor
 
 @implementation UIView (OPIBInspectable)
 
@@ -67,7 +66,7 @@
         CALayer *xian = [CALayer layer];
         [xian setBackgroundColor:EP_SEPARATION_LINE_COLOR.CGColor];
         //[xian setDk_backgroundColorPicker:DKColorPickerWithKey(@"LINE")];
-        xian.frame = CGRectMake(0, self.frame.size.height - 0.5, kScreenWith, 0.5);
+        xian.frame = CGRectMake(0, self.frame.size.height - 0.5, self.frame.size.width, 0.5);
         [self.layer addSublayer:xian];
     }
 }
@@ -80,7 +79,7 @@
         CALayer *xian = [CALayer layer];
         [xian setBackgroundColor:EP_SEPARATION_LINE_COLOR.CGColor];
         //[xian setDk_backgroundColorPicker:DKColorPickerWithKey(@"LINE")];
-        xian.frame = CGRectMake(0, 0, kScreenWith, 0.5);
+        xian.frame = CGRectMake(0, 0, self.frame.size.width, 0.5);
         [self.layer addSublayer:xian];
     }
 }
@@ -91,7 +90,7 @@
         CALayer *xian = [CALayer layer];
         [xian setBackgroundColor:EP_SEPARATION_LINE_COLOR.CGColor];
         //[xian setDk_backgroundColorPicker:DKColorPickerWithKey(@"LINE")];
-        xian.frame = CGRectMake(bottomX, self.frame.size.height - 0.5, kScreenWith - bottomX, 0.5);
+        xian.frame = CGRectMake(bottomX, self.frame.size.height - 0.5, self.frame.size.width - bottomX, 0.5);
         [self.layer addSublayer:xian];
     }
 }

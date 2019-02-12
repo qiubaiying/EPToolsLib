@@ -25,12 +25,13 @@ Pod::Spec.new do |s|
   s.subspec 'CategoryKit' do |ss|
     ss.source_files = 'EPToolsLib/CategoryKit/*.{h,m}'
   end
-  s.subspec 'WebViewJavascriptBridge' do |ss|
-    ss.source_files = 'EPToolsLib/WebViewJavascriptBridge/*.{h,m}'
-  end
+
   s.subspec 'CustomComponents' do |ss|
     ss.subspec 'MobileTextField' do |sss|
       sss.source_files = 'EPToolsLib/CustomComponents/MobileTextField/*.{h,m}'
+    end
+    ss.subspec 'WebViewJavascriptBridge' do |sss|
+      sss.source_files = 'EPToolsLib/CustomComponents/WebViewJavascriptBridge/*.{h,m}'
     end
   end
   
