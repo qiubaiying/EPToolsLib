@@ -18,6 +18,8 @@
  */
 - (UIImage *)resizeImage;
 
+
+
 /*
  *  不缓存的方式获取图片,限制为.png图片,不常用的图片用这种方法
  *
@@ -133,5 +135,10 @@
 +(UIImage *)getZengZhiIconWithId:(NSString *)strId;
 //获取 稿件状态 图标
 + (UIImage *)imageWithWorkStatus:(int)status;
-
+//限制图片大小不超过几兆
++ (UIImage *)compressImage:(UIImage *)image toMaxFileSize:(NSInteger)maxFileSize;
+//指定宽度按比例缩放
++(UIImage *) imageCompressForWidth:(UIImage *)sourceImage targetWidth:(CGFloat)defineWidth;
+//设置图片   imageWithContentsOfFile  替代  imageNamed
++(UIImage *)imageNamedWithContentFileName:(NSString *)imgName;
 @end

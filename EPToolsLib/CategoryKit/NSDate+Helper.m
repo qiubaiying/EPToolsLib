@@ -454,4 +454,13 @@
     return currentDateStr;
 }
 
+// 时间/日期转化成时间戳
++ (NSString *)timeStampFromTimeString:(NSString *)timeString withFormatter:(NSString *)formatter
+{
+    NSDate *date = [self getDateFromString:timeString withFormatter:formatter];
+    NSTimeInterval a = [date timeIntervalSince1970];
+    NSString *timeStamp = [NSString stringWithFormat:@"%.0f", a];
+    return timeStamp;
+}
+
 @end

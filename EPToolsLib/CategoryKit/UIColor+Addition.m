@@ -10,8 +10,7 @@
 
 @implementation UIColor(Addition)
 
-+ (UIColor *)colorWithHexString:(NSString *)color alpha:(CGFloat)alpha
-{
++ (UIColor *)colorWithHexString:(NSString *)color alpha:(CGFloat)alpha {
     //删除字符串中的空格
     NSString *cString = [[color stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] uppercaseString];
     // String should be 6 or 8 characters
@@ -57,9 +56,16 @@
 }
 
 //默认alpha值为1
-+ (UIColor *)colorWithHexString:(NSString *)color
-{
++ (UIColor *)colorWithHexString:(NSString *)color {
     return [self colorWithHexString:color alpha:1.0f];
 }
+
++ (UIColor *)randomColor {
+    CGFloat hue        = ( arc4random() % 256 / 256.0 );  //0.0 to 1.0
+    CGFloat saturation = ( arc4random() % 128 / 256.0 ) + 0.5;  // 0.5 to 1.0,away from white
+    CGFloat brightness = ( arc4random() % 128 / 256.0 ) + 0.5;  //0.5 to 1.0,away from black
+    return [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:1];
+}
+
 
 @end

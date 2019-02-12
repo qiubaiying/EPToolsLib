@@ -10,8 +10,12 @@
 
 @interface UIView (OPIBInspectable)
 
-@property (assign, nonatomic) IBInspectable NSInteger cornerRadius;
-@property (assign, nonatomic) IBInspectable NSInteger borderWidth;
+@property (assign, nonatomic) IBInspectable CGFloat cornerRadius;
+@property (assign, nonatomic) IBInspectable CGFloat borderWidth;
 @property (strong, nonatomic) IBInspectable UIColor *borderColor;
+
+@property(nonatomic,assign) IBInspectable BOOL topLine;
+@property(nonatomic,assign) IBInspectable BOOL bottomLine;
+@property(nonatomic,assign) IBInspectable CGFloat bottomX;
 
 @end

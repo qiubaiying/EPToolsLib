@@ -537,6 +537,87 @@ typedef enum {
     }
     return nil;
 }
++ (UIImage *)compressImage:(UIImage *)image toMaxFileSize:(NSInteger)maxFileSize {
+    if (image.size.width > 1242) {
+        image = [UIImage imageCompressForWidth:image targetWidth:1242];
+    }
+    CGFloat compression = 0.8;
+    CGFloat maxCompression = 0.1;
+    NSData *imageData = UIImageJPEGRepresentation(image, compression);
+    while ([imageData length] > maxFileSize && compression > maxCompression) {
+        compression -= 0.1;
+        imageData = UIImageJPEGRepresentation(image, compression);
+    }
+    UIImage *compressedImage = [UIImage imageWithData:imageData];
+    return compressedImage;
+}
 
+//指定宽度按比例缩放
++(UIImage *) imageCompressForWidth:(UIImage *)sourceImage targetWidth:(CGFloat)defineWidth{
+    
+    UIImage *newImage = nil;
+    CGSize imageSize = sourceImage.size;
+    CGFloat width = imageSize.width;
+    CGFloat height = imageSize.height;
+    CGFloat targetWidth = defineWidth;
+    CGFloat targetHeight = height / (width / targetWidth);
+    CGSize size = CGSizeMake(targetWidth, targetHeight);
+    CGFloat scaleFactor = 0.0;
+    CGFloat scaledWidth = targetWidth;
+    CGFloat scaledHeight = targetHeight;
+    CGPoint thumbnailPoint = CGPointMake(0.0, 0.0);
+    
+    if(CGSizeEqualToSize(imageSize, size) == NO){
+        
+        CGFloat widthFactor = targetWidth / width;
+        CGFloat heightFactor = targetHeight / height;
+        
+        if(widthFactor > heightFactor){
+            scaleFactor = widthFactor;
+        }
+        else{
+            scaleFactor = heightFactor;
+        }
+        scaledWidth = width * scaleFactor;
+        scaledHeight = height * scaleFactor;
+        
+        if(widthFactor > heightFactor){
+            
+            thumbnailPoint.y = (targetHeight - scaledHeight) * 0.5;
+            
+        }else if(widthFactor < heightFactor){
+            
+            thumbnailPoint.x = (targetWidth - scaledWidth) * 0.5;
+        }
+    }
+    
+    UIGraphicsBeginImageContext(size);
+    
+    CGRect thumbnailRect = CGRectZero;
+    thumbnailRect.origin = thumbnailPoint;
+    thumbnailRect.size.width = scaledWidth;
+    thumbnailRect.size.height = scaledHeight;
+    
+    [sourceImage drawInRect:thumbnailRect];
+    
+    newImage = UIGraphicsGetImageFromCurrentImageContext();
+    
+    if(newImage == nil){
+        
+        NSLog(@"scale image fail");
+    }
+    UIGraphicsEndImageContext();
+    return newImage;
+}
+//设置图片   imageWithContentsOfFile  替代  imageNamed
++(UIImage *)imageNamedWithContentFileName:(NSString *)imgName{
+    NSString *imgPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",imgName]];
+    if ([imgName rangeOfString:@".png"].location == NSNotFound) {
+        imgPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",imgName]];
+    }
+    
+    UIImage *img = [UIImage imageWithContentsOfFile:imgPath];
+    return img;
+}
 
 @end

@@ -74,8 +74,6 @@
 + (NSString *)getShortVersionBuild
 {
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-    
-    
     // app build版本
     NSString *app_build = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
     return app_build;
@@ -222,7 +220,7 @@
 //手机号码验证
 + (BOOL)checkPhoneNumInput:(NSString *)text
 {
-    NSString *Regex =@"(13[0-9]|14[0-9]|15[0-9]|17[0-9]|18[0-9]|19[0-9])\\d{8}";
+    NSString *Regex =@"(12[0-9]|13[0-9]|14[0-9]|15[0-9]|16[0-9]|17[0-9]|18[0-9]|19[0-9])\\d{8}";
     NSPredicate *mobileTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", Regex];
     return [mobileTest evaluateWithObject:text];
 }
@@ -237,14 +235,22 @@
     NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
     return [emailTest evaluateWithObject:candidate];
 }
-
 //微信号判断 6—20个字母、数字、下划线和减号，必须以字母开头（不区分大小写）
 +(BOOL)validateWeiXin:(NSString *)weixin
 {
-    NSString *weixinRegex = @"^[A-Za-z][A-Za-z0-9_-]{5,19}$";
+    NSString *weixinRegex = @"[A-Za-z0-9_-]";
     NSPredicate *weixinTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", weixinRegex];
     return [weixinTest evaluateWithObject:weixin];
 }
+
+//判断用户名：用户名不能以数字开头，用户名只支持汉字、字母、数字、下划线，用户名只支持4-16个字
++ (BOOL)checkUserNameInput:(NSString *)text
+{
+    NSString *Regex =@"^([\u4e00-\u9fa5]|[a-zA-Z]|[_]){1}([\u4e00-\u9fa5]|[a-zA-Z0-9]|[_]){3,15}";
+    NSPredicate *test = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", Regex];
+    return [test evaluateWithObject:text];
+}
+
 
 //判断是否包含sub字符串
 - (BOOL)isContainString:(NSString*)sub;
@@ -490,6 +496,11 @@
     return [self stringByReplacingOccurrencesOfString:@" " withString:@""];
 }
 
+/// 删除字符串的空格
+- (NSString*) deleteBlankSpace {
+    return [self stringByReplacingOccurrencesOfString:@" " withString:@""];
+}
+
 + (NSString *)fileName
 {
     NSDateFormatter *format = [[NSDateFormatter alloc] init];
@@ -556,4 +567,115 @@
     return htmlStr;
 }
 
+//限制规则：  6个连续数字 和相同数字 判断
+//1. 递增顺溜数字，例如：1 2 3 4 5 6
+//2. 递减顺溜数字，例如：6 5 4 3 2 1
+//3. 6位数都为相同的数字，例如：333333
++ (BOOL)checkPasswordFormat:(NSString *)password
+{
+    int same = 0;
+    int zheng = 0;
+    int fan = 0;
+    
+    //非纯数字，不用判断规则
+    if (![NSString isNumText:password]) {
+        return YES;
+    }
+    
+    unsigned long pSize = password.trim.length;
+    NSMutableArray *allArray = [NSMutableArray array];
+    for (int i = 0; i < pSize; i++)
+    {
+        [allArray addObject:[NSString stringWithFormat:@"%c",[password characterAtIndex:i]]];
+    }
+    
+    for (int i = 0; i < pSize - 1; i++)
+    {
+        int s = [allArray[i] intValue] - [allArray[i+1] intValue];
+        switch (s) {
+            case 0:
+                same++;
+                break;
+            case 1:
+                zheng++;
+                break;
+            case -1:
+                fan++;
+                break;
+            default:
+                break;
+        }
+    }
+    if (same == pSize - 1) {
+        return NO;
+    }
+    if (zheng == pSize - 1) {
+        return NO;
+    }
+    if (fan == pSize - 1) {
+        return NO;
+    }
+    return  YES;
+}
+//获取当前时间
++(NSString *)getCurrentTime{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init] ;
+    [formatter setDateStyle:NSDateFormatterMediumStyle];
+    [formatter setTimeStyle:NSDateFormatterShortStyle];
+    [formatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"]; // ----------设置你想要的格式,hh与HH的区别:分别表示12小时制,24小时制
+    //设置时区,这个对于时间的处理有时很重要
+    NSTimeZone* timeZone = [NSTimeZone timeZoneWithName:@"Asia/Shanghai"];
+    [formatter setTimeZone:timeZone];
+    NSDate *datenow = [NSDate date];//现在时间,你可以输出来看下是什么格式
+    NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)[datenow timeIntervalSince1970]];
+    return timeSp;
+}
+//获取当前时间戳
++(NSString *)getCurrentTimeTimestamp{
+    NSDate* dat = [NSDate dateWithTimeIntervalSinceNow:0];
+    NSTimeInterval a=[dat timeIntervalSince1970];
+    NSString*timeString = [NSString stringWithFormat:@"%0.f", a];//转为字符型
+    ;
+    return timeString;
+}
+//过滤html标签
++(NSString *)moveHtmlWithString:(NSString *)string{
+    NSRegularExpression *regularExpretion=[NSRegularExpression regularExpressionWithPattern:@"<[^>]*>|\n"
+                                                                                    options:0
+                                                                                      error:nil];
+    string=[regularExpretion stringByReplacingMatchesInString:string options:NSMatchingReportProgress range:NSMakeRange(0, string.length) withTemplate:@""];
+    return string;
+}
+
+/// 获取字符串的宽度
+- (CGFloat)stringWidthWithFont:(UIFont *)font height:(CGFloat)height {
+    if (self == nil || self.length == 0) {
+        return 0;
+    }
+    NSString *copyString = [NSString stringWithFormat:@"%@", self];
+    CGSize constrainedSize = CGSizeMake(999999, height);
+    NSDictionary * attribute = @{NSFontAttributeName:font};
+    CGSize size = [copyString boundingRectWithSize:constrainedSize options:NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:attribute context:nil].size;
+    return ceilf(size.width);
+}
+
++ (NSString *)getCourierTimeWithSec:(NSInteger)sec{
+    NSInteger hour = 0;
+    NSInteger minute = 0;
+    if (sec > 3600) {
+        hour = sec/3600;
+        minute = (sec - hour*3600)/60;
+    }else{
+        minute = sec/60;
+    }
+    
+    if (hour > 0 && minute > 0) {
+        return [NSString stringWithFormat:@"%ld小时%ld分钟",hour,minute];
+    }else if(hour > 0 && minute == 0){
+        return [NSString stringWithFormat:@"%ld小时",hour];
+    }else if (hour == 0 && minute > 0){
+        return [NSString stringWithFormat:@"%ld分钟",minute];
+    }else
+        return @"即将送达";
+}
 @end

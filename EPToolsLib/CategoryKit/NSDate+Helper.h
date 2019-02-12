@@ -117,6 +117,7 @@
 + (NSString *)getStringFromDate:(NSDate *)date withFormatter:(NSString *)formatter;
 //时间戳转为字符串
 + (NSString *)stringFromTimeInterval:(NSString *)timeInterval withFormatter:(NSString *)formatter;
-
+// 时间/日期转化成时间戳
++ (NSString *)timeStampFromTimeString:(NSString *)timeString withFormatter:(NSString *)formatter;
 
 @end

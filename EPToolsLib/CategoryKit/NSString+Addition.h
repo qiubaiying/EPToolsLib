@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import <UIKit/UIKit.h>
 
 @interface NSString (Addition)
 
@@ -68,7 +68,8 @@
 + (BOOL)validateEmail:(NSString *)candidate;
 //微信号判断 6—20个字母、数字、下划线和减号，必须以字母开头（不区分大小写）
 +(BOOL)validateWeiXin:(NSString *)weixin;
-
+//判断用户名：用户名不能以数字开头，用户名只支持汉字、字母、数字、下划线，用户名只支持2-8个字
++ (BOOL)checkUserNameInput:(NSString *)tex;
 //判断是否包含sub字符串
 - (BOOL)isContainString:(NSString*)sub;
 
@@ -110,6 +111,9 @@
 // 银行卡号转正常号 － 去除4位间的空格
 -(NSString *)bankNumToNormalNum;
 
+/// 删除字符串的空格
+- (NSString*) deleteBlankSpace;
+
 + (NSString *)filterHTML:(NSString *)html;
 
 + (NSString *)fileName;
@@ -121,5 +125,22 @@
 
 //pc 换行符 空格 替换 \n
 +(NSString *)htmlStringTabToString:(NSString *)htmlStr;
+
+//限制规则：  6个连续数字 和相同数字 判断
+//1. 递增顺溜数字，例如：1 2 3 4 5 6
+//2. 递减顺溜数字，例如：6 5 4 3 2 1
+//3. 6位数都为相同的数字，例如：33333
++ (BOOL)checkPasswordFormat:(NSString *)password;
+
++(NSString *)getCurrentTime;
++(NSString *)getCurrentTimeTimestamp;
+//过滤html标签
++(NSString *)moveHtmlWithString:(NSString *)string;
+
+/// 获取字符串的宽度
+- (CGFloat)stringWidthWithFont:(UIFont *)font height:(CGFloat)height;
+
++ (NSString *)getCourierTimeWithSec:(NSInteger)sec;
+
 
 @end
