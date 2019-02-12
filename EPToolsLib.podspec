@@ -28,6 +28,11 @@ Pod::Spec.new do |s|
   s.subspec 'WebViewJavascriptBridge' do |ss|
     ss.source_files = 'EPToolsLib/WebViewJavascriptBridge/*.{h,m}'
   end
+  s.subspec 'CustomComponents' do |ss|
+    ss.subspec 'MobileTextField' do |sss|
+      sss.source_files = 'EPToolsLib/CustomComponents/MobileTextField/*.{h,m}'
+    end
+  end
   
   
  

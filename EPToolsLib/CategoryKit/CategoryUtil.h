@@ -75,7 +75,8 @@
 #define kMaxLoadMore    10
 
 
-#define EP_SEPARATION_LINE_COLOR UIColor.lightGrayColor
+#define EP_SEPARATION_LINE_COLOR [UIColor colorWithHexString:@"E7E7E7"]
+
 // 透明
 #define CLEARCOLOR  [UIColor clearColor]
 
