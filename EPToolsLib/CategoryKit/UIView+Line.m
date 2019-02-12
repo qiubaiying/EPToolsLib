@@ -7,22 +7,24 @@
 //
 
 #import "UIView+Line.h"
+#import "CategoryUtil.h"
 
 @implementation UIView (Line)
 
 
 -(void)addBottomLine {
     CALayer *xian = [CALayer layer];
+    
     [xian setBackgroundColor:EP_SEPARATION_LINE_COLOR.CGColor];
     //[xian setDk_backgroundColorPicker:DKColorPickerWithKey(@"LINE")];
-    xian.frame = CGRectMake(0, self.mj_h - 0.5, ScreenWith, 0.5);
+    xian.frame = CGRectMake(0, self.frame.size.height - 0.5, kScreenWith, 0.5);
     [self.layer addSublayer:xian];
 }
 -(void)addTopLine {
     CALayer *xian = [CALayer layer];
     [xian setBackgroundColor:EP_SEPARATION_LINE_COLOR.CGColor];
     //[xian setDk_backgroundColorPicker:DKColorPickerWithKey(@"LINE")];
-    xian.frame = CGRectMake(0, 0, ScreenWith, 0.5);
+    xian.frame = CGRectMake(0, 0, kScreenWith, 0.5);
     [self.layer addSublayer:xian];
 }
 -(void)addMiddleLine:(CGRect)setFrame {
@@ -47,12 +49,12 @@
 
 - (void)addButtomLineWithX:(CGFloat)x Y:(CGFloat)y {
 
-    [self addMiddleLineWithX:x Y:y Width:ScreenWith - x];
+    [self addMiddleLineWithX:x Y:y Width:kScreenWith - x];
 }
 
 - (void)addCellBottomLineWithY:(CGFloat)y {
 
-    [self addMiddleLine:CGRectMake(15, y - 0.5, ScreenWith - 15, 0.5)];
+    [self addMiddleLine:CGRectMake(15, y - 0.5, kScreenWith - 15, 0.5)];
 }
 
 

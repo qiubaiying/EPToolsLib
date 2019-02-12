@@ -7,7 +7,10 @@
 //
 
 #import "UIView+OPIBInspectable.h"
-#import "Header.h"
+#import "CategoryUtil.h"
+#import <objc/runtime.h>
+
+#define EP_SEPARATION_LINE_COLOR UIColor.lightGrayColor
 
 @implementation UIView (OPIBInspectable)
 
@@ -16,6 +19,7 @@
 {
     self.layer.cornerRadius = cornerRadius;
     self.layer.masksToBounds = cornerRadius > 0;
+    
 }
 
 - (CGFloat)cornerRadius
@@ -63,7 +67,7 @@
         CALayer *xian = [CALayer layer];
         [xian setBackgroundColor:EP_SEPARATION_LINE_COLOR.CGColor];
         //[xian setDk_backgroundColorPicker:DKColorPickerWithKey(@"LINE")];
-        xian.frame = CGRectMake(0, self.mj_h - 0.5, ScreenWith, 0.5);
+        xian.frame = CGRectMake(0, self.frame.size.height - 0.5, kScreenWith, 0.5);
         [self.layer addSublayer:xian];
     }
 }
@@ -76,7 +80,7 @@
         CALayer *xian = [CALayer layer];
         [xian setBackgroundColor:EP_SEPARATION_LINE_COLOR.CGColor];
         //[xian setDk_backgroundColorPicker:DKColorPickerWithKey(@"LINE")];
-        xian.frame = CGRectMake(0, 0, ScreenWith, 0.5);
+        xian.frame = CGRectMake(0, 0, kScreenWith, 0.5);
         [self.layer addSublayer:xian];
     }
 }
@@ -87,7 +91,7 @@
         CALayer *xian = [CALayer layer];
         [xian setBackgroundColor:EP_SEPARATION_LINE_COLOR.CGColor];
         //[xian setDk_backgroundColorPicker:DKColorPickerWithKey(@"LINE")];
-        xian.frame = CGRectMake(bottomX, self.mj_h - 0.5, ScreenWith - bottomX, 0.5);
+        xian.frame = CGRectMake(bottomX, self.frame.size.height - 0.5, kScreenWith - bottomX, 0.5);
         [self.layer addSublayer:xian];
     }
 }

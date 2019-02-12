@@ -24,21 +24,23 @@
 #define iPhone6 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(750, 1334), [[UIScreen mainScreen] currentMode].size) : NO)
 #define iPhone6plus ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? (CGSizeEqualToSize(CGSizeMake(1125, 2001), [[UIScreen mainScreen] currentMode].size) || CGSizeEqualToSize(CGSizeMake(1242, 2208), [[UIScreen mainScreen] currentMode].size)) : NO)
 
-//设备屏幕大小
-#define DeviceBoundsSize    [[UIScreen mainScreen] bounds].size                         // 包含状态栏
-#define DeviceSize          [[UIScreen mainScreen] applicationFrame].size               // 不包含状态栏
-#define StatusBarSize       [[UIApplication sharedApplication] statusBarFrame].size     // 状态栏
-#define SelfNavSize         (CGSize){DeviceBoundsSize.width,44}                         // 当前导航栏
-#define SelfToolBarSize     (CGSize){DeviceBoundsSize.width,49}                         // 当前工具栏
-#define VisibleScreenFrame  (CGRect){0,0,DeviceBoundsSize.width,DeviceBoundsSize.height - SelfNavSize.height - StatusBarSize.height}    //不包含状态栏和导航栏
+/* 屏幕尺寸相关 */
+#define IS_IPHONE_X         \((CGSizeEqualToSize([UIScreen mainScreen].bounds.size, CGSizeMake(375, 812))\
+|| CGSizeEqualToSize([UIScreen mainScreen].bounds.size, CGSizeMake(812, 375))) \
+|| (CGSizeEqualToSize([UIScreen mainScreen].bounds.size, CGSizeMake(414, 896)) \
+|| CGSizeEqualToSize([UIScreen mainScreen].bounds.size, CGSizeMake(896, 414))))
 
-#define ScreenWith DeviceBoundsSize.width  //屏幕宽度
-#define ScreenHeight DeviceBoundsSize.height  //屏幕高度
-#define ScreenWithRatio DeviceBoundsSize.width/320  //屏幕宽度比例
+#define kScreenSize         ([UIScreen mainScreen].bounds.size)  // 包含状态栏
+#define kScreenWith         kScreenSize.width  //屏幕宽度
+#define kScreenHeight       kScreenSize.height  //屏幕高度
+#define kScreenRatio375     kScreenWith / 375.f  // 屏幕宽度比例 按6s的屏幕计算
+#define kNavBarHeight       (IS_IPHONE_X ? 88.f : 64.f)
+#define kTabBarHeight       (IS_IPHONE_X ? 83.f : 49.f)                       // 当前工具栏
+#define kVisibleScreenFrame  (CGRect){0,0,DeviceBoundsSize.width,DeviceBoundsSize.height - SelfNavSize.height - StatusBarSize.height}    //不包含状态栏和导航栏
+
 
 // 自定义弹窗的宽度
 #define AlertViewWidth VisibleScreenFrame.size.width - 44
-
 
 
 //字体
@@ -72,6 +74,8 @@
 //加载更多最大数
 #define kMaxLoadMore    10
 
+
+#define EP_SEPARATION_LINE_COLOR UIColor.lightGrayColor
 // 透明
 #define CLEARCOLOR  [UIColor clearColor]
 
