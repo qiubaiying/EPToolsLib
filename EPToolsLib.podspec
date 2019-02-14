@@ -22,10 +22,12 @@ Pod::Spec.new do |s|
   # “*.{h,m}” 表示匹配所有以.h和.m结尾的文件
   # “**” 表示匹配所有子目录
 
+  # CategoryKit
   s.subspec 'CategoryKit' do |ss|
     ss.source_files = 'EPToolsLib/CategoryKit/*.{h,m}'
   end
 
+  # CustomComponents
   s.subspec 'CustomComponents' do |ss|
     ss.subspec 'MobileTextField' do |sss|
       sss.source_files = 'EPToolsLib/CustomComponents/MobileTextField/*.{h,m}'
@@ -33,6 +35,10 @@ Pod::Spec.new do |s|
     ss.subspec 'WebViewJavascriptBridge' do |sss|
       sss.source_files = 'EPToolsLib/CustomComponents/WebViewJavascriptBridge/*.{h,m}'
     end
+    ss.subspec 'CBAutoScrollLabel' do |sss|
+      sss.source_files = 'EPToolsLib/CustomComponents/CBAutoScrollLabel/*.{h,m}'
+    end
+    
   end
   
   
